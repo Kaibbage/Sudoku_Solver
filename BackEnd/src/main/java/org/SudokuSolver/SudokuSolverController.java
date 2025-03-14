@@ -1,0 +1,186 @@
+package org.SudokuSolver;
+
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+
+@RestController
+@CrossOrigin(origins = "http://127.0.0.1:8081")  // Adjust the URL to your frontend's URL if necessary
+public class SudokuSolverController {
+
+    private SudokuSolverWebSocketHandler webSocketHandler;
+
+    // Constructor injection of WebSocket handler
+    public SudokuSolverController(SudokuSolverWebSocketHandler webSocketHandler) {
+        this.webSocketHandler = webSocketHandler;
+    }
+
+    public static class InputRequest {
+        private String input;
+
+        public String getInput() {
+            return input;
+        }
+
+        public void setInput(String input) {
+            this.input = input;
+        }
+    }
+
+
+
+    // Endpoint to start the recursive counting process
+    @PostMapping("/start-solving")
+    public String startSolving(@RequestBody InputRequest request) {
+        String input = request.getInput();
+        System.out.println(input);
+
+        char[][] grid = getGridFromString(input);
+        new Thread(() -> {
+            solveSudoku(grid);
+        }).start();
+
+
+        return "Sudoku solving started";
+    }
+
+    private char[][] getGridFromString(String stringGrid){
+        char[][] grid = new char[9][9];
+        String[] rows = stringGrid.split(" \\| ");
+
+        int r = 0;
+
+        for(String row: rows){
+            String[] units = row.split(" ");
+            int c = 0;
+
+            for(String unit: units){
+                grid[r][c] = unit.charAt(0);
+                c++;
+            }
+            r++;
+        }
+
+        return grid;
+    }
+
+    private String getStringFromGrid(char[][] grid){
+        String stringGrid = "";
+        for(int r = 0; r < 9; r++){
+            for(int c = 0; c < 9; c++){
+                stringGrid += grid[r][c] + " ";
+            }
+            stringGrid += "| ";
+        }
+
+        return stringGrid;
+
+    }
+
+    // Recursive function
+//    private void recursiveCountAndNotify(int current, int max) throws InterruptedException {
+//        if(current > max){
+//            return;
+//        }
+//        sendUpdateToFrontend(current);
+//        Thread.sleep(500);
+//        recursiveCountAndNotify(current + 1, max);
+//    }
+
+
+    // Method to send the counter update to the frontend via WebSocket
+    private void sendUpdateToFrontend(String value) {
+        if (webSocketHandler != null) {
+            webSocketHandler.sendUpdate(value);
+            System.out.println(value);
+        }
+    }
+
+    public void solveSudoku(char[][] board) {
+        int n = board.length;
+        boolean[][] rowUsed = new boolean[n][n];
+        boolean[][] colUsed = new boolean[n][n];
+        boolean[][] boxUsed = new boolean[n][n];
+        initialize(board, n, rowUsed, colUsed, boxUsed);
+        solve(board, 0, 0, n, rowUsed, colUsed, boxUsed);
+        String stringGrid = getStringFromGrid(board);
+        sendUpdateToFrontend(stringGrid);
+    }
+
+    public boolean solve(char[][] board, int r, int c, int n, boolean[][] rowUsed, boolean[][] colUsed, boolean[][] boxUsed){
+        if(r == n){
+            return true;
+        }
+
+        int nextR;
+        int nextC;
+
+        if(c < n-1){
+            nextR = r;
+            nextC = c+1;
+        }
+        else{
+            nextR = r+1;
+            nextC = 0;
+        }
+
+        if(board[r][c] != '.'){
+            return solve(board, nextR, nextC, n, rowUsed, colUsed, boxUsed);
+        }
+
+        for(int i = 1; i <= n; i++){
+            board[r][c] = (char) ('0' + i);
+            if(valid(rowUsed, colUsed, boxUsed, i, r, c)){
+                markUsed(rowUsed, colUsed, boxUsed, i, r, c);
+                if(solve(board, nextR, nextC, n, rowUsed, colUsed, boxUsed)){
+                    return true;
+                }
+                markUnused(rowUsed, colUsed, boxUsed, i, r, c);
+            }
+        }
+
+        board[r][c] = '.';
+
+        return false;
+    }
+
+    public void initialize(char[][] board, int n, boolean[][] rowUsed, boolean[][] colUsed, boolean[][] boxUsed){
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                if(board[i][j] != '.'){
+                    int val = Character.getNumericValue(board[i][j]);
+                    markUsed(rowUsed, colUsed, boxUsed, val, i, j);
+                }
+            }
+        }
+    }
+
+    public boolean valid(boolean[][] rowUsed, boolean[][] colUsed, boolean[][] boxUsed, int num, int r, int c){
+        int boxNum = getBoxNum(r, c);
+        int numIndex = num-1;
+        return !rowUsed[r][numIndex] && !colUsed[c][numIndex] && !boxUsed[boxNum][numIndex];
+    }
+
+    public void markUsed(boolean[][] rowUsed, boolean[][] colUsed, boolean[][] boxUsed, int num, int r, int c){
+        int boxNum = getBoxNum(r, c);
+        int numIndex = num-1;
+        rowUsed[r][numIndex] = true;
+        colUsed[c][numIndex] = true;
+        boxUsed[boxNum][numIndex] = true;
+
+    }
+
+    public void markUnused(boolean[][] rowUsed, boolean[][] colUsed, boolean[][] boxUsed, int num, int r, int c){
+        int boxNum = getBoxNum(r, c);
+        int numIndex = num-1;
+        rowUsed[r][numIndex] = false;
+        colUsed[c][numIndex] = false;
+        boxUsed[boxNum][numIndex] = false;
+
+    }
+
+    public int getBoxNum(int r, int c){
+        return (r/3)*3 + (c/3);
+    }
+
+}

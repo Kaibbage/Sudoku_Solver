@@ -1,18 +1,15 @@
- const wsUrl = "ws://localhost:8080/ws/count";
- let socket;
+const apiBaseUrl = "http://localhost:8080";
+const wsUrl = "ws://localhost:8080/ws/sudoku";
+let socket;
 
  function openWebSocket() {
      socket = new WebSocket(wsUrl);
 
      socket.onopen = function(event) {
-         console.log("WebSocket is connected");
-         document.getElementById('counterValue').innerText = "Connected";
+         console.log("WebSocket is connected arf arf");
      };
 
-     socket.onmessage = function(event) {
-         console.log("Received counter update: " + event.data);
-         document.getElementById('counterValue').innerText = event.data;
-     };
+     socket.onmessage = processGrid;
 
      socket.onerror = function(error) {
          console.log('WebSocket Error:', error);
@@ -23,15 +20,58 @@
      };
  }
 
- function startCounting() {
-     fetch("http://localhost:8080/start-counting", {
-         method: 'POST'
-     })
-         .then(response => response.text())
-         .then(data => {
-             console.log("Counting started: " + data);
-         });
- }
+ function processGrid(event) {
+    let stringGrid = event.data;
+
+    let rows = stringGrid.split(" | ");
+
+    let grid = [];
+
+    rows.forEach(function(row) {
+        let units = row.split(" ");
+        
+        let rowArray = [];  // Renaming to rowArray to avoid conflict with outer row variable
+        units.forEach(function(unit) {
+            rowArray.push(unit);  // Use push to add elements to the array
+        });
+        grid.push(rowArray);  // Use push to add rowArray to the grid
+    });
+
+    console.log(grid);
+    updateUI(grid);
+}
+
+function updateUI(grid){
+    for(let r = 0; r < 9; r++){
+        for(let c = 0; c < 9; c++){
+            let cell = document.getElementById(`cell-${r}-${c}`);
+            cell.value = grid[r][c];
+        }
+    }
+}
+
+
+async function sendToBackend(dataAsString) {
+    const data = { input: dataAsString };
+
+    try {
+        const response = await fetch(`${apiBaseUrl}/start-solving`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data), // Convert the payload to JSON
+        });
+
+        const result = await response.text(); // Extract result
+        console.log(result);
+        return result; // Return the result
+
+    } catch (error) {
+        console.error("Error:", error);
+        throw error; // Re-throw the error if needed
+    }
+}
 
 function createSudokuGrid() {
     const grid = document.getElementById("sudokuGrid");
@@ -64,6 +104,7 @@ function startSolve() {
     }
     sentString += " ";
     console.log(sentString);
+    sendToBackend(sentString);
 }
 
 function clearGrid() {

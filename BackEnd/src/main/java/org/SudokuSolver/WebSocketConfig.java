@@ -1,4 +1,4 @@
-package org.counterTest;
+package org.SudokuSolver;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
@@ -9,16 +9,16 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
 
-    private final CounterWebSocketHandler webSocketHandler;
+    private final SudokuSolverWebSocketHandler webSocketHandler;
 
     // Inject the singleton bean via constructor
-    public WebSocketConfig(CounterWebSocketHandler webSocketHandler) {
+    public WebSocketConfig(SudokuSolverWebSocketHandler webSocketHandler) {
         this.webSocketHandler = webSocketHandler;
     }
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(webSocketHandler, "/ws/count")
+        registry.addHandler(webSocketHandler, "/ws/sudoku")
                 .setAllowedOrigins("http://127.0.0.1:8081");  // Add allowed origins for WebSocket
     }
 }
