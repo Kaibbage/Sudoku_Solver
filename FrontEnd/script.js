@@ -45,7 +45,13 @@ function updateUI(grid){
     for(let r = 0; r < 9; r++){
         for(let c = 0; c < 9; c++){
             let cell = document.getElementById(`cell-${r}-${c}`);
-            cell.value = grid[r][c];
+            if(grid[r][c] !== "."){
+                cell.value = grid[r][c];
+            }
+            else{
+                cell.value = "";
+            }
+            
         }
     }
 }

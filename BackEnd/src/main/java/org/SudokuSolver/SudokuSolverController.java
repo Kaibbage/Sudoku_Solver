@@ -37,7 +37,11 @@ public class SudokuSolverController {
 
         char[][] grid = getGridFromString(input);
         new Thread(() -> {
-            solveSudoku(grid);
+            try {
+                solveSudoku(grid);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }).start();
 
 
@@ -96,7 +100,7 @@ public class SudokuSolverController {
         }
     }
 
-    public void solveSudoku(char[][] board) {
+    public void solveSudoku(char[][] board) throws InterruptedException {
         int n = board.length;
         boolean[][] rowUsed = new boolean[n][n];
         boolean[][] colUsed = new boolean[n][n];
@@ -107,10 +111,14 @@ public class SudokuSolverController {
         sendUpdateToFrontend(stringGrid);
     }
 
-    public boolean solve(char[][] board, int r, int c, int n, boolean[][] rowUsed, boolean[][] colUsed, boolean[][] boxUsed){
+    public boolean solve(char[][] board, int r, int c, int n, boolean[][] rowUsed, boolean[][] colUsed, boolean[][] boxUsed) throws InterruptedException {
         if(r == n){
             return true;
         }
+
+        Thread.sleep(50);
+        String stringGrid = getStringFromGrid(board);
+        sendUpdateToFrontend(stringGrid);
 
         int nextR;
         int nextC;

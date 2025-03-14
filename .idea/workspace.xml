@@ -5,18 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7e5c0948-821d-44fd-a3e5-1f441bbef7b1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/org/counterTest/CounterApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/org/SudokuSolver/SudokuSolverApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/org/counterTest/CounterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/org/SudokuSolver/SudokuSolverController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/org/counterTest/CounterWebSocketHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/org/SudokuSolver/SudokuSolverWebSocketHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/org/counterTest/WebSocketConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/org/SudokuSolver/WebSocketConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/target/classes/org/counterTest/CounterApplication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/target/classes/org/counterTest/CounterController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/target/classes/org/counterTest/CounterWebSocketHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/target/classes/org/counterTest/WebSocketConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/org/SudokuSolver/SudokuSolverController.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/org/SudokuSolver/SudokuSolverController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/target/classes/org/SudokuSolver/SudokuSolverController.class" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/target/classes/org/SudokuSolver/SudokuSolverController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FrontEnd/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/script.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
