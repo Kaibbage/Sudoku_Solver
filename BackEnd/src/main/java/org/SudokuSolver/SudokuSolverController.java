@@ -68,13 +68,21 @@ public class SudokuSolverController {
         return grid;
     }
 
-    private String getStringFromGrid(char[][] grid){
+    private String getStringFromGrid(char[][] grid, boolean finished, boolean failed){
         String stringGrid = "";
         for(int r = 0; r < 9; r++){
             for(int c = 0; c < 9; c++){
                 stringGrid += grid[r][c] + " ";
             }
             stringGrid += "| ";
+        }
+
+        if(finished){
+            stringGrid += "::" + "done";
+        }
+
+        if(failed){
+            stringGrid += "::" + "failed";
         }
 
         return stringGrid;
@@ -105,9 +113,16 @@ public class SudokuSolverController {
         boolean[][] rowUsed = new boolean[n][n];
         boolean[][] colUsed = new boolean[n][n];
         boolean[][] boxUsed = new boolean[n][n];
-        initialize(board, n, rowUsed, colUsed, boxUsed);
-        solve(board, 0, 0, n, rowUsed, colUsed, boxUsed);
-        String stringGrid = getStringFromGrid(board);
+        boolean validStart = initialize(board, n, rowUsed, colUsed, boxUsed);
+
+        if(!validStart){
+            String stringGrid = getStringFromGrid(board, false, true);
+            sendUpdateToFrontend(stringGrid);
+            return;
+        }
+
+        boolean done = solve(board, 0, 0, n, rowUsed, colUsed, boxUsed);
+        String stringGrid = getStringFromGrid(board, done, false);
         sendUpdateToFrontend(stringGrid);
     }
 
@@ -116,8 +131,8 @@ public class SudokuSolverController {
             return true;
         }
 
-        Thread.sleep(50);
-        String stringGrid = getStringFromGrid(board);
+        //Thread.sleep(1);
+        String stringGrid = getStringFromGrid(board, false, false);
         sendUpdateToFrontend(stringGrid);
 
         int nextR;
@@ -152,15 +167,23 @@ public class SudokuSolverController {
         return false;
     }
 
-    public void initialize(char[][] board, int n, boolean[][] rowUsed, boolean[][] colUsed, boolean[][] boxUsed){
+    public boolean initialize(char[][] board, int n, boolean[][] rowUsed, boolean[][] colUsed, boolean[][] boxUsed){
         for(int i = 0; i < n; i++){
             for(int j = 0; j < n; j++){
                 if(board[i][j] != '.'){
                     int val = Character.getNumericValue(board[i][j]);
-                    markUsed(rowUsed, colUsed, boxUsed, val, i, j);
+                    if(valid(rowUsed, colUsed, boxUsed, val, i, j)){
+                        markUsed(rowUsed, colUsed, boxUsed, val, i, j);
+                    }
+                    else{
+                        return false;
+                    }
+
                 }
             }
         }
+
+        return true;
     }
 
     public boolean valid(boolean[][] rowUsed, boolean[][] colUsed, boolean[][] boxUsed, int num, int r, int c){
