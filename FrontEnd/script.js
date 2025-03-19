@@ -26,6 +26,20 @@ function openWebSocket() {
 
     let stringGrid = twoPart[0];
 
+    let grid = stringGridToGrid(stringGrid);
+
+    updateUI(grid);
+
+    let doneString = twoPart[1];
+    if(doneString === "done"){
+        markGreen();
+    }
+    if(doneString === "failed"){
+        markRed();
+    }
+}
+
+function stringGridToGrid(stringGrid){
     let rows = stringGrid.split(" | ");
 
     let grid = [];
@@ -40,15 +54,7 @@ function openWebSocket() {
         grid.push(rowArray);  // Use push to add rowArray to the grid
     });
 
-    updateUI(grid);
-
-    let doneString = twoPart[1];
-    if(doneString === "done"){
-        markGreen();
-    }
-    if(doneString === "failed"){
-        markRed();
-    }
+    return grid;
 }
 
 function markGreen() {
@@ -136,6 +142,8 @@ function updateUI(grid){
         }
     }
 }
+
+
 
 
 async function sendToBackend(dataAsString) {
@@ -233,6 +241,23 @@ function clearGrid() {
             cell.value = '';
             cell.style.backgroundColor = "white";
         }
+    }
+}
+
+async function randomize() {
+    clearGrid();
+    try {
+        const response = await fetch(`${apiBaseUrl}/generate-random`, {
+            method: "POST",
+        });
+
+        let stringGrid = await response.text(); // Extract result
+        let grid = stringGridToGrid(stringGrid);
+        updateUI(grid);
+
+    } catch (error) {
+        console.error("Error:", error);
+        throw error; // Re-throw the error if needed
     }
 }
 

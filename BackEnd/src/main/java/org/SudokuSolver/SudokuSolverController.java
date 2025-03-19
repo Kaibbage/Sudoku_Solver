@@ -48,6 +48,49 @@ public class SudokuSolverController {
         return "Sudoku solving started";
     }
 
+    @PostMapping("/generate-random")
+    public String generateRandom() {
+        int numNumbers = ((int) (Math.random() * 30)) + 10;
+
+        System.out.println(numNumbers);
+
+        char[][] grid = generateRandomGrid(numNumbers);
+
+
+        String stringGrid = getStringFromGrid(grid);
+
+        return stringGrid;
+    }
+
+    public char[][] generateRandomGrid(int numNumbers){
+        boolean[][] rowUsed = new boolean[9][9];
+        boolean[][] colUsed = new boolean[9][9];
+        boolean[][] boxUsed = new boolean[9][9];
+
+        char[][] grid = new char[9][9];
+
+        for(int i = 0; i < 9; i++){
+            Arrays.fill(grid[i], '.');
+        }
+
+        int count = 0;
+
+        while(count < numNumbers){
+            int randomR = (int) (Math.random() * 9);
+            int randomC = (int) (Math.random() * 9);
+            int randomVal = (int) (Math.random() * 9) + 1;
+
+            if(valid(rowUsed, colUsed, boxUsed, randomVal, randomR, randomC)){
+                markUsed(rowUsed, colUsed, boxUsed, randomVal, randomR, randomC);
+                grid[randomR][randomC] = (char) ('0' + randomVal);
+            }
+
+            count++;
+        }
+
+        return grid;
+    }
+
     private char[][] getGridFromString(String stringGrid){
         char[][] grid = new char[9][9];
         String[] rows = stringGrid.split(" \\| ");
@@ -89,15 +132,19 @@ public class SudokuSolverController {
 
     }
 
-    // Recursive function
-//    private void recursiveCountAndNotify(int current, int max) throws InterruptedException {
-//        if(current > max){
-//            return;
-//        }
-//        sendUpdateToFrontend(current);
-//        Thread.sleep(500);
-//        recursiveCountAndNotify(current + 1, max);
-//    }
+    private String getStringFromGrid(char[][] grid){
+        String stringGrid = "";
+        for(int r = 0; r < 9; r++){
+            for(int c = 0; c < 9; c++){
+                stringGrid += grid[r][c] + " ";
+            }
+            stringGrid += "| ";
+        }
+
+        return stringGrid;
+    }
+
+
 
 
     // Method to send the counter update to the frontend via WebSocket
