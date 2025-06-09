@@ -112,36 +112,40 @@ public class SudokuSolverController {
     }
 
     private String getStringFromGrid(char[][] grid, boolean finished, boolean failed){
-        String stringGrid = "";
+        StringBuilder sb = new StringBuilder();
         for(int r = 0; r < 9; r++){
             for(int c = 0; c < 9; c++){
-                stringGrid += grid[r][c] + " ";
+                sb.append(grid[r][c] + " ");
             }
-            stringGrid += "| ";
+            sb.append("| ");
         }
 
+        sb.delete(sb.length()-3, sb.length());
+
         if(finished){
-            stringGrid += "::" + "done";
+            sb.append("::" + "done");
         }
 
         if(failed){
-            stringGrid += "::" + "failed";
+            sb.append("::" + "failed");
         }
 
-        return stringGrid;
+        return sb.toString();
 
     }
 
     private String getStringFromGrid(char[][] grid){
-        String stringGrid = "";
+        StringBuilder sb = new StringBuilder();
         for(int r = 0; r < 9; r++){
             for(int c = 0; c < 9; c++){
-                stringGrid += grid[r][c] + " ";
+                sb.append(grid[r][c] + " ");
             }
-            stringGrid += "| ";
+            sb.append("| ");
         }
 
-        return stringGrid;
+        sb.delete(sb.length()-3, sb.length());
+
+        return sb.toString();
     }
 
 

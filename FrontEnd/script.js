@@ -9,16 +9,16 @@ function openWebSocket() {
         console.log("WebSocket is connected arf arf");
     };
 
-     socket.onmessage = processGrid;
+    socket.onmessage = processGrid;
 
-     socket.onerror = function(error) {
-         console.log('WebSocket Error:', error);
-     };
+    socket.onerror = function(error) {
+        console.log('WebSocket Error:', error);
+    };
 
-     socket.onclose = function(event) {
-         console.log('WebSocket connection closed');
-     };
- }
+    socket.onclose = function(event) {
+        console.log('WebSocket connection closed');
+    };
+}
 
  function processGrid(event) {
     let str = event.data;
@@ -41,17 +41,15 @@ function openWebSocket() {
 
 function stringGridToGrid(stringGrid){
     let rows = stringGrid.split(" | ");
+    console.log(rows.length);
 
     let grid = [];
 
     rows.forEach(function(row) {
         let units = row.split(" ");
-        
-        let rowArray = [];  // Renaming to rowArray to avoid conflict with outer row variable
-        units.forEach(function(unit) {
-            rowArray.push(unit);  // Use push to add elements to the array
-        });
-        grid.push(rowArray);  // Use push to add rowArray to the grid
+        console.log(units.length);
+
+        grid.push(units);  // Use push to add rowArray to the grid
     });
 
     return grid;
@@ -229,7 +227,8 @@ function startSolve() {
         }
         sentString += "| ";
     }
-    sentString += " ";
+
+    sentString = sentString.slice(0, sentString.length-3);
     console.log(sentString);
     sendToBackend(sentString);
 }
