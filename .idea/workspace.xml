@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7e5c0948-821d-44fd-a3e5-1f441bbef7b1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/org/SudokuSolver/SudokuSolverController.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/org/SudokuSolver/SudokuSolverController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/script.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/target/blackjack-backend-1.0-SNAPSHOT.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/target/blackjack-backend-1.0-SNAPSHOT.jar.original" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/target/maven-archiver/pom.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
