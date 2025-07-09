@@ -27,6 +27,14 @@ public class SudokuSolverController {
         }
     }
 
+    @RestController
+    public class HomeController {
+        @GetMapping("/")
+        public String home() {
+            return "Sudoku Solver Backend is running!";
+        }
+    }
+
 
 
     // Endpoint to start the recursive counting process
