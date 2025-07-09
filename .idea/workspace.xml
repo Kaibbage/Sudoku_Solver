@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7e5c0948-821d-44fd-a3e5-1f441bbef7b1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/org/SudokuSolver/WebSocketConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/org/SudokuSolver/WebSocketConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/org/SudokuSolver/SudokuSolverController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/org/SudokuSolver/SudokuSolverController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

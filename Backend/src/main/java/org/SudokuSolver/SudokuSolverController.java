@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Arrays;
 
 @RestController
-@CrossOrigin(origins = "https://sudoku-solver-3b4n.onrender.com/")  // Adjust the URL to your frontend's URL if necessary
+@CrossOrigin(origins = "https://sudoku-solver-3b4n.onrender.com")  // Adjust the URL to your frontend's URL if necessary
 public class SudokuSolverController {
 
     private SudokuSolverWebSocketHandler webSocketHandler;
