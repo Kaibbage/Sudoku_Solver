@@ -1,4 +1,4 @@
-const apiBaseUrl = "https://sudoku-solver-598q.onrender.com/";
+const apiBaseUrl = "https://sudoku-solver-598q.onrender.com";
 const wsUrl = "wss://sudoku-solver-598q.onrender.com/ws/sudoku";
 let socket;
 
