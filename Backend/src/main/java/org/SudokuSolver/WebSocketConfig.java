@@ -19,6 +19,6 @@ public class WebSocketConfig implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(webSocketHandler, "/ws/sudoku")
-                .setAllowedOrigins("http://127.0.0.1:8081");  // Add allowed origins for WebSocket
+                .setAllowedOrigins("https://sudoku-solver-3b4n.onrender.com/");  // Add allowed origins for WebSocket
     }
 }
