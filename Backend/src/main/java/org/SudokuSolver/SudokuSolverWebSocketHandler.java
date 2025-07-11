@@ -15,7 +15,7 @@ public class SudokuSolverWebSocketHandler extends TextWebSocketHandler {
     private final Set<WebSocketSession> sessions = new CopyOnWriteArraySet<>();
 
     public SudokuSolverWebSocketHandler() {
-        System.out.println("CounterWebSocketHandler instance created: " + this);
+        System.out.println("SudokuSolverWebSocketHandler instance created: " + this);
     }
 
     @Override
@@ -40,7 +40,6 @@ public class SudokuSolverWebSocketHandler extends TextWebSocketHandler {
                 if (session.isOpen()) {
                     try {
                         session.sendMessage(message);
-                        System.out.println("Sent update to session " + session.getId() + ": " + counterValue);
                     } catch (IOException e) {
                         System.err.println("Failed to send message to session " + session.getId() + ": " + e.getMessage());
                     }

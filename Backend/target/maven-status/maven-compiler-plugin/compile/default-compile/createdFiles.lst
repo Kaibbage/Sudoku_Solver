@@ -1,5 +1,6 @@
+org\SudokuSolver\SudokuSolverController$HomeController.class
 org\SudokuSolver\SudokuSolverController$InputRequest.class
 org\SudokuSolver\WebSocketConfig.class
 org\SudokuSolver\SudokuSolverApplication.class
-org\SudokuSolver\SudokuSolverWebSocketHandler.class
 org\SudokuSolver\SudokuSolverController.class
+org\SudokuSolver\SudokuSolverWebSocketHandler.class

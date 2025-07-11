@@ -1,5 +1,7 @@
-const apiBaseUrl = "https://sudoku-solver-598q.onrender.com";
-const wsUrl = "wss://sudoku-solver-598q.onrender.com/ws/sudoku";
+//const apiBaseUrl = "https://sudoku-solver-598q.onrender.com";
+//const wsUrl = "wss://sudoku-solver-598q.onrender.com/ws/sudoku";
+const apiBaseUrl = "http://localhost:8080";
+const wsUrl = "ws://localhost:8080/ws/sudoku";
 let socket;
 
 function openWebSocket() {
@@ -7,6 +9,7 @@ function openWebSocket() {
 
     socket.onopen = function(event) {
         console.log("WebSocket is connected arf arf");
+        markOpen();
     };
 
     socket.onmessage = processGrid;
@@ -18,6 +21,11 @@ function openWebSocket() {
     socket.onclose = function(event) {
         console.log('WebSocket connection closed');
     };
+}
+
+function markOpen(){
+    document.getElementById("status-circle").style.backgroundColor = "lightgreen";
+    document.getElementById("status-label").textContent = "Ready :)";
 }
 
  function processGrid(event) {
@@ -41,13 +49,11 @@ function openWebSocket() {
 
 function stringGridToGrid(stringGrid){
     let rows = stringGrid.split(" | ");
-    console.log(rows.length);
 
     let grid = [];
 
     rows.forEach(function(row) {
         let units = row.split(" ");
-        console.log(units.length);
 
         grid.push(units);  // Use push to add rowArray to the grid
     });
@@ -157,7 +163,6 @@ async function sendToBackend(dataAsString) {
         });
 
         const result = await response.text(); // Extract result
-        console.log(result);
         return result; // Return the result
 
     } catch (error) {
@@ -229,7 +234,6 @@ function startSolve() {
     }
 
     sentString = sentString.slice(0, sentString.length-3);
-    console.log(sentString);
     sendToBackend(sentString);
 }
 

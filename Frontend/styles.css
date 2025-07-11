@@ -12,11 +12,11 @@ body {
     flex-direction: column;
     align-items: center;
 }
-/* New style for buttons container to align buttons side by side */
+
 .button-container {
     display: flex;
     justify-content: center;
-    gap: 70px; /* Space between buttons */
+    gap: 70px;
     margin-top: 10px;
     margin-bottom: 10px;
 }
@@ -37,7 +37,7 @@ button {
 }
 
 .random-button:hover {
-    background-color: rgba(11, 11, 233, 0.979); /* Slightly darker shade of lightblue */
+    background-color: rgba(11, 11, 233, 0.979);
 }
 
 .start-button {
@@ -47,7 +47,7 @@ button {
 }
 
 .start-button:hover {
-    background-color: #45A049; /* Darker green */
+    background-color: #45A049;
 }
 
 .clear-button {
@@ -57,7 +57,7 @@ button {
 }
 
 .clear-button:hover {
-    background-color: #cc0000; /* A slightly darker but still vibrant red */
+    background-color: #cc0000; 
 }
 
 .sudoku-container {
@@ -79,11 +79,122 @@ button {
     outline: none;
     box-sizing: border-box;
 }
-/* Bold borders for 3x3 subgrids */
+
 .cell:nth-child(9n+4), .cell:nth-child(9n+7) {
     border-left: 3px solid black;
 }
 .cell:nth-child(n+28):nth-child(-n+36),
 .cell:nth-child(n+55):nth-child(-n+63) {
     border-top: 3px solid black;
+}
+
+
+.status-container {
+    position: fixed;
+    top: 40px;
+    left: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1000;
+
+    border: 2px solid #333;
+    background-color: #f0f0f0;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.15);
+
+    width: 200px;
+    height: 200px;
+    box-sizing: border-box;
+}
+
+
+.status-label {
+    font-size: 18px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.status-indicator {
+    position: absolute;
+    left: 50%;
+    bottom: 50%;
+    transform: translate(-50%, 70%);
+    width: 50px;
+    height: 50px;
+    background-color: red;
+    border-radius: 50%;
+    border: 2px solid #333;
+}
+
+
+.left-panel {
+    position: fixed;
+    top: 40px;
+    left: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 1000;
+}
+
+.instruction-container {
+    position: relative;
+    border: 2px solid #333;
+    background-color: #f0f0f0;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.15);
+    width: 400px;
+    height: 200px;
+    margin-top: 400px;
+}
+
+#instruction-text{
+    margin: 0 0 15px 0;
+    font-size: 16px;
+    color: #333;
+    line-height: 1.4;
+}
+
+#next-button {
+    background-color: #ffa500;
+    color: white;
+    padding: 8px 0;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 50%;
+    transition: background-color 0.3s;
+    
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#next-button:hover {
+    background-color: #e69500;
+}
+
+.simple-widget {
+  position: fixed;
+  top: 300px;
+  right: 200px;
+  background: #f0f0f0;
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  width: 300px;
+  height: 300px;
+}
+
+.simple-widget p {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+  line-height: 1.4;
 }

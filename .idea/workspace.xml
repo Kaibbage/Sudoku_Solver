@@ -5,7 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7e5c0948-821d-44fd-a3e5-1f441bbef7b1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/target/classes/org/SudokuSolver/SudokuSolverController$HomeController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/src/main/java/org/SudokuSolver/SudokuSolverController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/org/SudokuSolver/SudokuSolverController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/org/SudokuSolver/SudokuSolverWebSocketHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/org/SudokuSolver/SudokuSolverWebSocketHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/org/SudokuSolver/WebSocketConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/org/SudokuSolver/WebSocketConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/target/classes/org/SudokuSolver/SudokuSolverController$InputRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/target/classes/org/SudokuSolver/SudokuSolverController$InputRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/target/classes/org/SudokuSolver/SudokuSolverController.class" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/target/classes/org/SudokuSolver/SudokuSolverController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/target/classes/org/SudokuSolver/SudokuSolverWebSocketHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/target/classes/org/SudokuSolver/SudokuSolverWebSocketHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/target/classes/org/SudokuSolver/WebSocketConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/target/classes/org/SudokuSolver/WebSocketConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/script.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +52,7 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/GithubProjects/SudokuSolver&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/kais9/Downloads/ssTest/Sudoku_Solver-d31493018dc01a0910a512534b37a937bdd73fd3&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15429688&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,

@@ -7,10 +7,20 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-
     <h1>Sudoku Solver</h1>
-    <div class="placeholder"></div>
+
+    <div class="left-panel">
+        <div class="status-container">
+            <div id="status-label" class="status-label">This will turn green when the webpage is ready to be used</div>
+            <div id="status-circle" class="status-indicator"></div>
+        </div>
+        
+        <div class="instruction-container">
+            <p id="instruction-text">Click here to get instructions</p>
+            <button id="next-button">Next</button>
+        </div>
+    </div>
+
     <div class="button-container">
         <button class="start-button" onclick="startSolve()">Start</button>
         <button class="clear-button" onclick="clearGrid()">Clear</button>
@@ -19,8 +29,9 @@
 
     <div class="sudoku-container" id="sudokuGrid"></div>
 
-
-
+    <div class="simple-widget">
+        <p>Press START to begin solving</p>
+    </div>
 
     <script src="script.js"></script>
 </body>

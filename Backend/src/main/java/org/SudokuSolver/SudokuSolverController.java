@@ -5,7 +5,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Arrays;
 
 @RestController
-@CrossOrigin(origins = "https://sudoku-solver-3b4n.onrender.com")  // Adjust the URL to your frontend's URL if necessary
+@CrossOrigin(origins = {
+        "https://sudoku-solver-3b4n.onrender.com",
+        "http://127.0.0.1:8081"
+})
 public class SudokuSolverController {
 
     private SudokuSolverWebSocketHandler webSocketHandler;
@@ -37,11 +40,9 @@ public class SudokuSolverController {
 
 
 
-    // Endpoint to start the recursive counting process
     @PostMapping("/start-solving")
     public String startSolving(@RequestBody InputRequest request) {
         String input = request.getInput();
-        System.out.println(input);
 
         char[][] grid = getGridFromString(input);
         new Thread(() -> {
@@ -59,8 +60,6 @@ public class SudokuSolverController {
     @PostMapping("/generate-random")
     public String generateRandom() {
         int numNumbers = ((int) (Math.random() * 30)) + 10;
-
-        System.out.println(numNumbers);
 
         char[][] grid = generateRandomGrid(numNumbers);
 
@@ -163,7 +162,6 @@ public class SudokuSolverController {
     private void sendUpdateToFrontend(String value) {
         if (webSocketHandler != null) {
             webSocketHandler.sendUpdate(value);
-            System.out.println(value);
         }
     }
 
