@@ -7,6 +7,7 @@
     <list default="true" id="7e5c0948-821d-44fd-a3e5-1f441bbef7b1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/src/main/java/org/SudokuSolver/SudokuSolverController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/org/SudokuSolver/SudokuSolverController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/target/classes/org/SudokuSolver/SudokuSolverController.class" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/target/classes/org/SudokuSolver/SudokuSolverController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

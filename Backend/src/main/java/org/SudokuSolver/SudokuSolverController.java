@@ -58,7 +58,7 @@ public class SudokuSolverController {
     }
 
     @PostMapping("/generate-random")
-    public String generateRandom() {
+    public String generateRandom() throws InterruptedException {
         int numNumbers = ((int) (Math.random() * 40)) + 18;
 
         char[][] grid = generateRandomGrid(numNumbers);
@@ -95,16 +95,21 @@ public class SudokuSolverController {
             count++;
         }
 
+        char[][] tempGrid = new char[9][9];
+        for(int r = 0; r < 9; r++){
+            for(int c = 0; c < 9; c++){
+                tempGrid[r][c] = grid[r][c];
+            }
+        }
+
         boolean done = solve(grid, 0, 0, 9, rowUsed, colUsed, boxUsed, false);
 
         if(done){
-            return grid;
+            return tempGrid;
         }
         else{
             return generateRandomGrid(numNumbers);
         }
-
-        return grid;
     }
 
     private char[][] getGridFromString(String stringGrid){
