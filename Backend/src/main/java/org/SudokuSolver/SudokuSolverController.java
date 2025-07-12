@@ -59,7 +59,7 @@ public class SudokuSolverController {
 
     @PostMapping("/generate-random")
     public String generateRandom() {
-        int numNumbers = ((int) (Math.random() * 30)) + 10;
+        int numNumbers = ((int) (Math.random() * 40)) + 18;
 
         char[][] grid = generateRandomGrid(numNumbers);
 
@@ -69,7 +69,7 @@ public class SudokuSolverController {
         return stringGrid;
     }
 
-    public char[][] generateRandomGrid(int numNumbers){
+    public char[][] generateRandomGrid(int numNumbers) throws InterruptedException {
         boolean[][] rowUsed = new boolean[9][9];
         boolean[][] colUsed = new boolean[9][9];
         boolean[][] boxUsed = new boolean[9][9];
@@ -93,6 +93,15 @@ public class SudokuSolverController {
             }
 
             count++;
+        }
+
+        boolean done = solve(grid, 0, 0, 9, rowUsed, colUsed, boxUsed, false);
+
+        if(done){
+            return grid;
+        }
+        else{
+            return generateRandomGrid(numNumbers);
         }
 
         return grid;
@@ -178,19 +187,23 @@ public class SudokuSolverController {
             return;
         }
 
-        boolean done = solve(board, 0, 0, n, rowUsed, colUsed, boxUsed);
+        boolean done = solve(board, 0, 0, n, rowUsed, colUsed, boxUsed, true);
         String stringGrid = getStringFromGrid(board, done, false);
         sendUpdateToFrontend(stringGrid);
     }
 
-    public boolean solve(char[][] board, int r, int c, int n, boolean[][] rowUsed, boolean[][] colUsed, boolean[][] boxUsed) throws InterruptedException {
+    public boolean solve(char[][] board, int r, int c, int n, boolean[][] rowUsed, boolean[][] colUsed, boolean[][] boxUsed, boolean delay) throws InterruptedException {
         if(r == n){
             return true;
         }
 
-        //Thread.sleep(1);
-        String stringGrid = getStringFromGrid(board, false, false);
-        sendUpdateToFrontend(stringGrid);
+
+        if(delay){
+            //Thread.sleep(1);
+            String stringGrid = getStringFromGrid(board, false, false);
+            sendUpdateToFrontend(stringGrid);
+        }
+
 
         int nextR;
         int nextC;
@@ -205,14 +218,14 @@ public class SudokuSolverController {
         }
 
         if(board[r][c] != '.'){
-            return solve(board, nextR, nextC, n, rowUsed, colUsed, boxUsed);
+            return solve(board, nextR, nextC, n, rowUsed, colUsed, boxUsed, delay);
         }
 
         for(int i = 1; i <= n; i++){
             board[r][c] = (char) ('0' + i);
             if(valid(rowUsed, colUsed, boxUsed, i, r, c)){
                 markUsed(rowUsed, colUsed, boxUsed, i, r, c);
-                if(solve(board, nextR, nextC, n, rowUsed, colUsed, boxUsed)){
+                if(solve(board, nextR, nextC, n, rowUsed, colUsed, boxUsed, delay)){
                     return true;
                 }
                 markUnused(rowUsed, colUsed, boxUsed, i, r, c);
