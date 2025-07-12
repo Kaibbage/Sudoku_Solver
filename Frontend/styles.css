@@ -152,12 +152,7 @@ button {
     margin-top: 400px;
 }
 
-#instruction-text{
-    margin: 0 0 15px 0;
-    font-size: 16px;
-    color: #333;
-    line-height: 1.4;
-}
+
 
 #next-button {
     background-color: #ffa500;
@@ -192,9 +187,16 @@ button {
   height: 300px;
 }
 
-.simple-widget p {
+#infoText {
   margin: 0;
-  font-size: 18px;
+  font-size: 24px;
   color: #333;
   line-height: 1.4;
+}
+
+#instruction-text{
+    margin: 0;
+    font-size: 20px;
+    color: #333;
+    line-height: 1.4;
 }

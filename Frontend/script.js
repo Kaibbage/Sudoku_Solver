@@ -1,7 +1,7 @@
-//const apiBaseUrl = "https://sudoku-solver-598q.onrender.com";
-//const wsUrl = "wss://sudoku-solver-598q.onrender.com/ws/sudoku";
-const apiBaseUrl = "http://localhost:8080";
-const wsUrl = "ws://localhost:8080/ws/sudoku";
+const apiBaseUrl = "https://sudoku-solver-598q.onrender.com";
+const wsUrl = "wss://sudoku-solver-598q.onrender.com/ws/sudoku";
+//const apiBaseUrl = "http://localhost:8080";
+//const wsUrl = "ws://localhost:8080/ws/sudoku";
 let socket;
 
 function openWebSocket() {
@@ -26,6 +26,53 @@ function openWebSocket() {
 function markOpen(){
     document.getElementById("status-circle").style.backgroundColor = "lightgreen";
     document.getElementById("status-label").textContent = "Ready :)";
+}
+
+
+
+function setupHoverInfo() {
+    //info text for each hover over button, could perhaps change to make more detailed
+    const buttonInfo = {
+        'start-button': 'Click here for the program to start solving the sudoku',
+        'clear-button': 'Click here to clear the grid',
+        'random-button': 'Click here to generate a random solvable sudoku',
+        'next-button': 'Click here to get the next part of the instructions',
+        'sudokuGrid': 'Enter the sudoku values in this grid',
+        'simple-widget': 'Find explanations in here',
+        'status-container': "This will turn green once the website is ready to be used, until then it will be red",
+        'instruction-container': "This box contains instructions"
+    };
+  const infoText = document.getElementById('infoText');
+
+  //adding hover for every button
+  Object.keys(buttonInfo).forEach(buttonId => {
+    const button = document.getElementById(buttonId);
+    if (button) {
+      button.addEventListener('mouseenter', () => {
+        infoText.textContent = buttonInfo[buttonId];
+      });
+      button.addEventListener('mouseleave', () => {
+        infoText.textContent = 'Hover over anything to see information about it.';
+      });
+    }
+  });
+}
+
+let instructions = ["Click here to get instructions", 
+                    "This is a site that solves sudokus, enter the numbers into the grid as you would with a normal sudoku",
+                    "Click solve to start the solving process, if the sudoku can be solved then it will solve it and light up green, if it cannot then it will light up red",
+                    "Click clear to clear the grid of all the numbers",
+                    "Click random to generate a random solvable sudoku",
+                    "Have fun :)"];
+let instructionNumber = 0;
+
+function setInstructionInfo(){
+    document.getElementById("instruction-text").textContent = instructions[instructionNumber];
+    instructionNumber++;
+    if(instructionNumber == instructions.length){
+        instructionNumber = 0;
+    }
+    
 }
 
  function processGrid(event) {
@@ -351,6 +398,10 @@ function initialize() {
             handleDeleteBackspace(event);
         }
     });
+
+    setupHoverInfo();
+
+    setInstructionInfo();
 }
 
 window.onload = initialize;
