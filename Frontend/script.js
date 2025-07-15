@@ -7,14 +7,20 @@ let socket;
 let uniqueId;
 
 let timeToReady = 120;
-let ready = false;
+let intervalId;
 
 function openWebSocket() {
     socket = new WebSocket(wsUrl);
 
     socket.onopen = function(event) {
         console.log("WebSocket is connected arf arf");
+        clearInterval(intervalId);
+
         markOpen();
+        
+        setTimeout(() => {
+            enableMainButtons();
+        }, 100);
     };
 
     socket.onmessage = function (event) {
@@ -41,6 +47,19 @@ function openWebSocket() {
 function markOpen(){
     document.getElementById("status-circle").style.backgroundColor = "lightgreen";
     document.getElementById("status-label").textContent = "Ready :)";
+}
+
+function startTimer(){
+    intervalId = setInterval(() => {
+        timeToReady--;
+        updateTimer();
+    }, 1000);
+}
+
+function updateTimer(){
+    let min = Math.floor(timeToReady/60);
+    let seconds = timeToReady % 60;
+    document.getElementById("status-label").innerHTML = `This will turn green when the webpage is ready to be used. <br> Time remaining: ${min} min, ${seconds} seconds`;
 }
 
 function processGrid(event) {
@@ -443,6 +462,9 @@ function initialize() {
     setupHoverInfo();
 
     setInstructionInfo();
+    disableMainButtons();
+    updateTimer();
+    startTimer();
 }
 
 window.onload = initialize;
