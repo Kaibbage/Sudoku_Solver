@@ -1,8 +1,10 @@
-const apiBaseUrl = "https://sudoku-solver-598q.onrender.com";
-const wsUrl = "wss://sudoku-solver-598q.onrender.com/ws/sudoku";
-//const apiBaseUrl = "http://localhost:8080";
-//const wsUrl = "ws://localhost:8080/ws/sudoku";
+//const apiBaseUrl = "https://sudoku-solver-598q.onrender.com";
+//const wsUrl = "wss://sudoku-solver-598q.onrender.com/ws/sudoku";
+const apiBaseUrl = "http://localhost:8080";
+const wsUrl = "ws://localhost:8080/ws/sudoku";
 let socket;
+
+let uniqueId;
 
 function openWebSocket() {
     socket = new WebSocket(wsUrl);
@@ -12,7 +14,17 @@ function openWebSocket() {
         markOpen();
     };
 
-    socket.onmessage = processGrid;
+    socket.onmessage = function (event) {
+        let str = event.data;
+        if(str.startsWith("SessionId:")){
+            uniqueId = str.split(":")[1];
+        }
+        else{
+            processGrid(event);
+        }
+    };
+
+        processGrid;
 
     socket.onerror = function(error) {
         console.log('WebSocket Error:', error);
@@ -28,6 +40,45 @@ function markOpen(){
     document.getElementById("status-label").textContent = "Ready :)";
 }
 
+function processGrid(event) {
+    let str = event.data;
+    let twoPart = str.split("::");
+
+    let stringGrid = twoPart[0];
+
+    let grid = stringGridToGrid(stringGrid);
+
+    updateUI(grid);
+
+    let doneString = twoPart[1];
+    if(doneString === "done"){
+        markGreen();
+    }
+    else if(doneString === "failed"){
+        markRed();
+    }
+
+    if(doneString === "done" || doneString === "failed"){
+        setTimeout(() => {
+            enableMainButtons();
+        }, 8100);
+    }
+
+}
+
+function disableMainButtons(){
+    const buttons = document.querySelectorAll('.mainButton');
+    for(let button of buttons){
+        button.disabled = true;
+    }
+}
+
+function enableMainButtons(){
+    const buttons = document.querySelectorAll('.mainButton');
+    for(let button of buttons){
+        button.disabled = false;
+    }
+}
 
 
 function setupHoverInfo() {
@@ -35,27 +86,27 @@ function setupHoverInfo() {
     const buttonInfo = {
         'start-button': 'Click here for the program to start solving the sudoku',
         'clear-button': 'Click here to clear the grid',
-        'random-button': 'Click here to generate a random solvable sudoku',
+        'random-button': 'Click here to generate a random solvable sudoku. There is a small chance that this process will be slow, so if that happens feel free to press it again to generate again faster.',
         'next-button': 'Click here to get the next part of the instructions',
         'sudokuGrid': 'Enter the sudoku values in this grid',
         'simple-widget': 'Find explanations in here',
         'status-container': "This will turn green once the website is ready to be used, until then it will be red",
         'instruction-container': "This box contains instructions"
     };
-  const infoText = document.getElementById('infoText');
+    const infoText = document.getElementById('infoText');
 
-  //adding hover for every button
-  Object.keys(buttonInfo).forEach(buttonId => {
-    const button = document.getElementById(buttonId);
-    if (button) {
-      button.addEventListener('mouseenter', () => {
-        infoText.textContent = buttonInfo[buttonId];
-      });
-      button.addEventListener('mouseleave', () => {
-        infoText.textContent = 'Hover over anything to see information about it.';
-      });
-    }
-  });
+    //adding hover for every button
+    Object.keys(buttonInfo).forEach(buttonId => {
+        const button = document.getElementById(buttonId);
+        if(button){
+            button.addEventListener('mouseenter', () => {
+            infoText.textContent = buttonInfo[buttonId];
+        });
+        button.addEventListener('mouseleave', () => {
+            infoText.textContent = 'Hover over anything to see information about it.';
+        });
+        }
+    });
 }
 
 let instructions = ["Click here to get instructions", 
@@ -75,24 +126,7 @@ function setInstructionInfo(){
     
 }
 
- function processGrid(event) {
-    let str = event.data;
-    let twoPart = str.split("::");
 
-    let stringGrid = twoPart[0];
-
-    let grid = stringGridToGrid(stringGrid);
-
-    updateUI(grid);
-
-    let doneString = twoPart[1];
-    if(doneString === "done"){
-        markGreen();
-    }
-    if(doneString === "failed"){
-        markRed();
-    }
-}
 
 function stringGridToGrid(stringGrid){
     let rows = stringGrid.split(" | ");
@@ -198,7 +232,10 @@ function updateUI(grid){
 
 
 async function sendToBackend(dataAsString) {
-    const data = { input: dataAsString };
+    const data = { 
+        input: dataAsString,
+        id: uniqueId
+     };
 
     try {
         const response = await fetch(`${apiBaseUrl}/start-solving`, {
@@ -282,6 +319,7 @@ function startSolve() {
 
     sentString = sentString.slice(0, sentString.length-3);
     sendToBackend(sentString);
+    disableMainButtons();
 }
 
 function clearGrid() {

@@ -20,13 +20,20 @@ public class SudokuSolverController {
 
     public static class InputRequest {
         private String input;
+        private String id;
 
         public String getInput() {
             return input;
         }
+        public String getId(){
+            return id;
+        }
 
         public void setInput(String input) {
             this.input = input;
+        }
+        public void setId(String id){
+            this.id = id;
         }
     }
 
@@ -43,11 +50,12 @@ public class SudokuSolverController {
     @PostMapping("/start-solving")
     public String startSolving(@RequestBody InputRequest request) {
         String input = request.getInput();
+        String id = request.getId();
 
         char[][] grid = getGridFromString(input);
         new Thread(() -> {
             try {
-                solveSudoku(grid);
+                solveSudoku(grid, id);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -59,10 +67,7 @@ public class SudokuSolverController {
 
     @PostMapping("/generate-random")
     public String generateRandom() throws InterruptedException {
-
-
         char[][] grid = generateRandomGrid();
-
 
         String stringGrid = getStringFromGrid(grid);
 
@@ -71,7 +76,7 @@ public class SudokuSolverController {
 
     public char[][] generateRandomGrid() throws InterruptedException {
         int numNumbers = ((int) (Math.random() * 30)) + 18;
-        System.out.println(numNumbers);
+
         boolean[][] rowUsed = new boolean[9][9];
         boolean[][] colUsed = new boolean[9][9];
         boolean[][] boxUsed = new boolean[9][9];
@@ -104,7 +109,7 @@ public class SudokuSolverController {
             }
         }
 
-        boolean done = solve(grid, 0, 0, 9, rowUsed, colUsed, boxUsed, false);
+        boolean done = solve(grid, 0, 0, 9, rowUsed, colUsed, boxUsed, false, "");
 
         if(done){
             return tempGrid;
@@ -148,9 +153,11 @@ public class SudokuSolverController {
         if(finished){
             sb.append("::" + "done");
         }
-
-        if(failed){
+        else if(failed){
             sb.append("::" + "failed");
+        }
+        else{
+            sb.append("::inProgress");
         }
 
         return sb.toString();
@@ -175,13 +182,13 @@ public class SudokuSolverController {
 
 
     // Method to send the counter update to the frontend via WebSocket
-    private void sendUpdateToFrontend(String value) {
+    private void sendUpdateToFrontend(String value, String id) {
         if (webSocketHandler != null) {
-            webSocketHandler.sendUpdate(value);
+            webSocketHandler.sendUpdate(value, id);
         }
     }
 
-    public void solveSudoku(char[][] board) throws InterruptedException {
+    public void solveSudoku(char[][] board, String id) throws InterruptedException {
         int n = board.length;
         boolean[][] rowUsed = new boolean[n][n];
         boolean[][] colUsed = new boolean[n][n];
@@ -190,16 +197,16 @@ public class SudokuSolverController {
 
         if(!validStart){
             String stringGrid = getStringFromGrid(board, false, true);
-            sendUpdateToFrontend(stringGrid);
+            sendUpdateToFrontend(stringGrid, id);
             return;
         }
 
-        boolean done = solve(board, 0, 0, n, rowUsed, colUsed, boxUsed, true);
+        boolean done = solve(board, 0, 0, n, rowUsed, colUsed, boxUsed, true, id);
         String stringGrid = getStringFromGrid(board, done, false);
-        sendUpdateToFrontend(stringGrid);
+        sendUpdateToFrontend(stringGrid, id);
     }
 
-    public boolean solve(char[][] board, int r, int c, int n, boolean[][] rowUsed, boolean[][] colUsed, boolean[][] boxUsed, boolean delay) throws InterruptedException {
+    public boolean solve(char[][] board, int r, int c, int n, boolean[][] rowUsed, boolean[][] colUsed, boolean[][] boxUsed, boolean delay, String id) throws InterruptedException {
         if(r == n){
             return true;
         }
@@ -208,7 +215,7 @@ public class SudokuSolverController {
         if(delay){
             //Thread.sleep(1);
             String stringGrid = getStringFromGrid(board, false, false);
-            sendUpdateToFrontend(stringGrid);
+            sendUpdateToFrontend(stringGrid, id);
         }
 
 
@@ -225,14 +232,14 @@ public class SudokuSolverController {
         }
 
         if(board[r][c] != '.'){
-            return solve(board, nextR, nextC, n, rowUsed, colUsed, boxUsed, delay);
+            return solve(board, nextR, nextC, n, rowUsed, colUsed, boxUsed, delay, id);
         }
 
         for(int i = 1; i <= n; i++){
             board[r][c] = (char) ('0' + i);
             if(valid(rowUsed, colUsed, boxUsed, i, r, c)){
                 markUsed(rowUsed, colUsed, boxUsed, i, r, c);
-                if(solve(board, nextR, nextC, n, rowUsed, colUsed, boxUsed, delay)){
+                if(solve(board, nextR, nextC, n, rowUsed, colUsed, boxUsed, delay, id)){
                     return true;
                 }
                 markUnused(rowUsed, colUsed, boxUsed, i, r, c);
