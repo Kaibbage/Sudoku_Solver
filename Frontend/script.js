@@ -1,7 +1,7 @@
-//const apiBaseUrl = "https://sudoku-solver-598q.onrender.com";
-//const wsUrl = "wss://sudoku-solver-598q.onrender.com/ws/sudoku";
-const apiBaseUrl = "http://localhost:8080";
-const wsUrl = "ws://localhost:8080/ws/sudoku";
+const apiBaseUrl = "https://sudoku-solver-598q.onrender.com";
+const wsUrl = "wss://sudoku-solver-598q.onrender.com/ws/sudoku";
+//const apiBaseUrl = "http://localhost:8080";
+//const wsUrl = "ws://localhost:8080/ws/sudoku";
 let socket;
 
 function openWebSocket() {
