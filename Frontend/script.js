@@ -45,8 +45,12 @@ function openWebSocket() {
 }
 
 function markOpen(){
-    document.getElementById("status-circle").style.backgroundColor = "lightgreen";
     document.getElementById("status-label").textContent = "Ready :)";
+    let statusCircle = document.getElementById("status-circle");
+    // statusCircle.style.height = "75px";
+    // statusCircle.style.width = "75px";
+    statusCircle.style.bottom = "50%";
+    statusCircle.style.backgroundColor = "lightgreen";
 }
 
 function startTimer(){
