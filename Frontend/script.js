@@ -14,7 +14,7 @@ function openWebSocket() {
 
     socket.onopen = function(event) {
         console.log("WebSocket is connected arf arf");
-        clearInterval(intervalId);
+
 
         markOpen();
         
@@ -45,6 +45,7 @@ function openWebSocket() {
 }
 
 function markOpen(){
+    clearInterval(intervalId);
     document.getElementById("status-label").textContent = "Ready :)";
     let statusCircle = document.getElementById("status-circle");
     // statusCircle.style.height = "75px";
@@ -92,6 +93,14 @@ function processGrid(event) {
 
 }
 
+function hideOrShow(){
+    const extras = document.querySelectorAll('.extra');
+
+    extras.forEach(element => {
+        element.hidden = !element.hidden;
+    });
+}
+
 function disableMainButtons(){
     const buttons = document.querySelectorAll('.mainButton');
     for(let button of buttons){
@@ -109,7 +118,7 @@ function enableMainButtons(){
 
 function setupHoverInfo() {
     //info text for each hover over button, could perhaps change to make more detailed
-    const buttonInfo = {
+    const pieces = {
         'start-button': 'Click here for the program to start solving the sudoku',
         'clear-button': 'Click here to clear the grid',
         'random-button': 'Click here to generate a random solvable sudoku. There is a small chance that this process will be slow, so if that happens feel free to press it again to generate again faster.',
@@ -117,18 +126,19 @@ function setupHoverInfo() {
         'sudokuGrid': 'Enter the sudoku values in this grid',
         'simple-widget': 'Find explanations in here',
         'status-container': "This will turn green once the website is ready to be used, until then it will be red",
-        'instruction-container': "This box contains instructions"
+        'instruction-container': "This box contains instructions",
+        'hide-button': "click this to hide all extra widgets that are just for ease of use"
     };
     const infoText = document.getElementById('infoText');
 
     //adding hover for every button
-    Object.keys(buttonInfo).forEach(buttonId => {
-        const button = document.getElementById(buttonId);
-        if(button){
-            button.addEventListener('mouseenter', () => {
-            infoText.textContent = buttonInfo[buttonId];
+    Object.keys(pieces).forEach(pieceId => {
+        const piece = document.getElementById(pieceId);
+        if(piece){
+            piece.addEventListener('mouseenter', () => {
+            infoText.textContent = pieces[pieceId];
         });
-        button.addEventListener('mouseleave', () => {
+        piece.addEventListener('mouseleave', () => {
             infoText.textContent = 'Hover over anything to see information about it.';
         });
         }
@@ -151,6 +161,7 @@ function setInstructionInfo(){
     }
     
 }
+
 
 
 

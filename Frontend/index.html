@@ -9,13 +9,13 @@
 <body>
     <h1>Sudoku Solver</h1>
 
-    <div class="left-panel">
-        <div id='status-container'class="status-container">
+    <div class="left-panel extra">
+        <div id="status-container" class="status-container extra">
             <div id="status-label" class="status-label"></div>
             <div id="status-circle" class="status-indicator"></div>
         </div>
         
-        <div id='instruction-container'class="instruction-container">
+        <div id='instruction-container' class="instruction-container extra">
             <p id="instruction-text">Click here to get instructions</p>
             <button id="next-button" onclick = "setInstructionInfo()">Next</button>
         </div>
@@ -29,9 +29,11 @@
 
     <div class="sudoku-container" id="sudokuGrid"></div>
 
-    <div id='simple-widget' class="simple-widget">
+    <div id='simple-widget' class="simple-widget extra">
         <p id="infoText">Hover over any button to see information about it.</p>
     </div>
+
+    <button id="hide-button" onclick="hideOrShow()">Hide extra widgets</button>
 
     <script src="script.js"></script>
 </body>

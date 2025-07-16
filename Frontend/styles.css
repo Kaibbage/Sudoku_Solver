@@ -88,12 +88,23 @@ button {
     border-top: 3px solid black;
 }
 
+.left-panel {
+    position: absolute;
+    top: 40px;
+    left: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 1000;
+    height: 1000px;
+    width: 400px;
+}
 
 .status-container {
-    position: fixed;
-    top: 40px;
-    left: 220px;
-    display: flex;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     flex-direction: column;
     align-items: center;
     z-index: 1000;
@@ -129,19 +140,8 @@ button {
     border: 2px solid #333;
 }
 
-
-.left-panel {
-    position: fixed;
-    top: 40px;
-    left: 100px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    z-index: 1000;
-}
-
 .instruction-container {
-    position: relative;
+    position: absolute;
     border: 2px solid #333;
     background-color: #f0f0f0;
     padding: 15px;
@@ -149,7 +149,9 @@ button {
     box-shadow: 2px 2px 8px rgba(0,0,0,0.15);
     width: 400px;
     height: 200px;
-    margin-top: 400px;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 
@@ -163,8 +165,9 @@ button {
     border-radius: 4px;
     cursor: pointer;
     width: 50%;
+    height: 30%;
     transition: background-color 0.3s;
-    
+
     position: absolute;
     bottom: 20px;
     left: 50%;
@@ -175,8 +178,16 @@ button {
     background-color: #e69500;
 }
 
+#instruction-text{
+    margin: 0;
+    font-size: 20px;
+    color: #333;
+    line-height: 1.4;
+}
+
+
 .simple-widget {
-  position: fixed;
+  position: absolute;
   top: 300px;
   right: 200px;
   background: #f0f0f0;
@@ -194,9 +205,19 @@ button {
   line-height: 1.4;
 }
 
-#instruction-text{
-    margin: 0;
-    font-size: 20px;
-    color: #333;
-    line-height: 1.4;
+#hide-button {
+    position: absolute;
+    left: 40px;
+    top: 300px;
+    background-color: rgb(89, 97, 197);
+    height: 60px;
+    width: 110px;
+    font-size: 14px;
+    color: white;
+    z-index: 2000;
+
+}
+
+#hide-button:hover {
+    background-color: rgb(51, 55, 110);
 }

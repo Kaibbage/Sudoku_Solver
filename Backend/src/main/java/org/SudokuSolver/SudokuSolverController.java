@@ -37,13 +37,12 @@ public class SudokuSolverController {
         }
     }
 
-    @RestController
-    public class HomeController {
-        @GetMapping("/")
-        public String home() {
-            return "Sudoku Solver Backend is running!";
-        }
+
+    @GetMapping("/")
+    public String home() {
+        return "Sudoku Solver Backend is running!";
     }
+
 
 
 
